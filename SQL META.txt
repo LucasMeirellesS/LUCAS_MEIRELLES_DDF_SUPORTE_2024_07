@@ -1,0 +1,213 @@
+select * from TB__MZ7DJ7__USER;
+
+select * from TB__DBYNA1__TRANSACTIONS;
+
+select * from TB__UUM1KE__TAX;
+
+select * from TB__WN3XB4__INTERACTION;
+
+-- TABELA USER;
+-- Média de idade por churn;
+SELECT 
+    CASE
+        WHEN CHURN = 1 THEN 'Churn'
+        WHEN CHURN = 0 THEN 'Não Churn'
+        ELSE NULL
+    END AS CHURN_STATUS,
+    AVG(AGE) AS AVG_AGE
+FROM
+    TB__MZ7DJ7__USER
+GROUP BY 
+    CHURN;
+    
+-- Quantidade de churn por usuários de IOS
+SELECT
+    CASE
+        WHEN CHURN = 1 THEN 'Churn'
+        WHEN CHURN = 0 THEN 'Não Churn'
+        ELSE NULL
+    END AS CHURN_STATUS_IOS,
+    COUNT(CHURN) as CHURN_COUNT_IOS
+FROM
+    TB__MZ7DJ7__USER
+WHERE
+    IOS_USER = 1
+GROUP BY
+    CHURN;
+
+-- Faixa Etária com Maior média CREDIT_SCORE;
+SELECT 
+    AGE,
+    AVG(COALESCE(CREDIT_SCORE, 0)) AS CREDIT_SCORE
+FROM 
+    TB__MZ7DJ7__USER
+GROUP BY
+    AGE
+ORDER BY
+    CREDIT_SCORE DESC
+LIMIT 10;
+
+-- PAYMENT_TYPE mais comum
+SELECT 
+    PAYMENT_TYPE,
+    COUNT(PAYMENT_TYPE)
+FROM 
+    TB__MZ7DJ7__USER
+GROUP BY 
+    PAYMENT_TYPE;
+
+-- Quantidade de usuários de Android x IOS;
+SELECT 
+    USERTYPE,
+    Count(*) QUANTITY
+FROM(
+    SELECT 
+        CASE 
+            WHEN ANDROID_USER = 1 THEN 'ANDROID'
+            ELSE NULL
+        END AS USERTYPE
+    FROM 
+        TB__MZ7DJ7__USER
+    WHERE 
+        ANDROID_USER = 1 
+    
+    UNION ALL 
+    
+    SELECT
+        CASE
+            WHEN IOS_USER = 1 THEN 'iOS'
+            ELSE NULL
+        END AS USERTYPE
+    FROM 
+        TB__MZ7DJ7__USER
+    WHERE 
+        IOS_USER = 1
+        
+) AS ANDROI_IOS_SUBQUERY
+GROUP BY
+    USERTYPE;
+
+-- Quantidade de CHURN por usuários de Android;
+SELECT
+    CHURN_STATUS,
+    COUNT(*) AS ANDROID_CHURN
+FROM(
+    SELECT 
+        CASE 
+            WHEN ANDROID_USER = 1 THEN 'ANDROID'
+            ELSE NULL
+        END AS USERTYPE,
+        CASE
+            WHEN CHURN = 1 THEN 'Churn'
+            WHEN CHURN = 0 THEN 'Não Churn'
+            ELSE NULL
+        END AS CHURN_STATUS
+    FROM 
+        TB__MZ7DJ7__USER
+        
+) AS ANDROI_IOS_SUBQUERY
+WHERE
+    USERTYPE = 'ANDROID'
+GROUP BY 
+    CHURN_STATUS;
+
+-- Quantidade de CHURN por usários IOS;
+SELECT
+    CHURN_STATUS,
+    COUNT(*) AS IOS_CHURN
+FROM(
+    SELECT 
+        CASE 
+            WHEN IOS_USER = 1 THEN 'iOS'
+            ELSE NULL
+        END AS USERTYPE,
+        CASE
+            WHEN CHURN = 1 THEN 'Churn'
+            WHEN CHURN = 0 THEN 'Não Churn'
+            ELSE 'Desconhecido'
+        END AS CHURN_STATUS
+    FROM 
+        TB__MZ7DJ7__USER
+        
+) AS ANDROI_IOS_SUBQUERY
+WHERE
+    USERTYPE = 'iOS'
+GROUP BY 
+    CHURN_STATUS;
+
+-- CHURN para usuários de Android e IOS
+
+SELECT
+    USERTYPE,
+    COUNT(CHURN_STATUS) AS CHURN_COUNT
+FROM (
+    SELECT 
+        CASE 
+            WHEN ANDROID_USER = 1 THEN 'Android'
+            WHEN IOS_USER = 1 THEN 'iOS'
+            ELSE NULL
+        END AS USERTYPE,
+        CASE
+            WHEN CHURN = 1 THEN 'Churn'
+            WHEN CHURN = 0 THEN 'Não Churn'
+            ELSE NULL
+        END AS CHURN_STATUS
+    FROM 
+        TB__MZ7DJ7__USER
+    WHERE 
+        (ANDROID_USER = 1 OR IOS_USER = 1)
+        AND 
+            CHURN_STATUS = 'Churn'
+) AS CHURN_USERTYPE_SUBQUERY
+GROUP BY 
+    USERTYPE;
+
+
+-- Top 10 dos usuários que mais compraram
+SELECT 
+    USER,
+    SUM(PURCHASES) PURCHASES_USER
+FROM 
+    TB__MZ7DJ7__USER
+GROUP BY
+    USER
+ORDER BY 
+    PURCHASES_USER DESC
+LIMIT 10;
+
+
+-- Faturamento no Período diário;
+SELECT
+    CASE 
+        WHEN LENGTH(TRANS.DATE) = 21 THEN LEFT(TRANS.DATE, LENGTH(TRANS.DATE) - 9)
+        WHEN LENGTH(TRANS.DATE) = 22 THEN LEFT(TRANS.DATE, LENGTH(TRANS.DATE) - 10)
+     END AS DATE_TAX,
+    SUM(TAX.TAX) TOTAL
+FROM 
+    TB__UUM1KE__TAX TAX JOIN TB__DBYNA1__TRANSACTIONS TRANS ON TAX.TRANSACTION_ID = TRANS.TRANSACTION_ID
+GROUP BY
+    DATE_TAX
+ORDER BY
+    DATE_TAX;
+
+-- Faturamento total;
+SELECT
+    SUM(TAX.TAX) TOTAL
+FROM 
+    TB__UUM1KE__TAX TAX JOIN TB__DBYNA1__TRANSACTIONS TRANS ON TAX.TRANSACTION_ID = TRANS.TRANSACTION_ID;
+
+
+
+-- Total de Interações;
+SELECT
+    HOUR,
+    COUNT(HOUR) HOUR_ACTIVATE,
+    SUM(LIKED) TOTAL_LIKES,
+    SUM(USED_PREMIUM_FEATURE) USED_PREMIUM_FEATURE_TOTAL 
+FROM 
+    TB__WN3XB4__INTERACTION
+GROUP BY 
+    HOUR
+ORDER BY
+    TO_TIMESTAMP(HOUR, 'HH12:MI AM');
+    
