@@ -202,3 +202,51 @@ GROUP BY
     CHURN;
 
 ![URL-da-imagem](https://github.com/LucasMeirellesS/LUCAS_MEIRELLES_DDF_SUPORTE_2024_07/blob/main/MediaCHURN.png)
+
+## Quantidade de usuários de Android x IOS;
+>SELECT
+    USERTYPE,
+    Count(*) QUANTITY
+FROM(
+    SELECT
+        CASE
+            WHEN ANDROID_USER = 1 THEN 'ANDROID'
+            ELSE NULL
+        END AS USERTYPE
+    FROM
+        TB__MZ7DJ7__USER
+    WHERE
+        ANDROID_USER = 1  
+    UNION ALL
+    SELECT
+        CASE
+            WHEN IOS_USER = 1 THEN 'iOS'
+            ELSE NULL
+        END AS USERTYPE
+    FROM
+        TB__MZ7DJ7__USER
+    WHERE
+        IOS_USER = 1
+) AS ANDROI_IOS_SUBQUERY
+GROUP BY
+    USERTYPE;
+
+![URL-da-imagem](https://github.com/LucasMeirellesS/LUCAS_MEIRELLES_DDF_SUPORTE_2024_07/blob/main/USERS_ANDROID.png)
+
+
+## Faixa Etária com Maior média CREDIT_SCORE;
+> SELECT
+    AGE,
+    AVG(COALESCE(CREDIT_SCORE, 0)) AS CREDIT_SCORE
+FROM
+    TB__MZ7DJ7__USER
+GROUP BY
+    AGE
+ORDER BY
+    CREDIT_SCORE DESC
+LIMIT 10;
+
+![URL-da-imagem](https://github.com/LucasMeirellesS/LUCAS_MEIRELLES_DDF_SUPORTE_2024_07/blob/main/MEDIA%20DE%20CREDIT%20SCORE.png)
+
+
+
