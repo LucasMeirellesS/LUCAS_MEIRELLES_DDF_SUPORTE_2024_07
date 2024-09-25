@@ -248,5 +248,42 @@ LIMIT 10;
 
 ![URL-da-imagem](https://github.com/LucasMeirellesS/LUCAS_MEIRELLES_DDF_SUPORTE_2024_07/blob/main/MEDIA%20DE%20CREDIT%20SCORE.png)
 
+## Faturamento total;
+> SELECT
+    SUM(TAX.TAX) TOTAL
+FROM
+    TB__UUM1KE__TAX TAX JOIN TB__DBYNA1__TRANSACTIONS TRANS ON TAX.TRANSACTION_ID = TRANS.TRANSACTION_ID;
+
+![URL-da-imagem](https://github.com/LucasMeirellesS/LUCAS_MEIRELLES_DDF_SUPORTE_2024_07/blob/main/META_FATURAMENTO_TOTAL.png)
+
+## PAYMENT_TYPE mais comum
+>SELECT
+    PAYMENT_TYPE,
+    COUNT(PAYMENT_TYPE)
+FROM
+    TB__MZ7DJ7__USER
+GROUP BY
+    PAYMENT_TYPE
+LIMIT 1;
+
+![URL-da-imagem](https://github.com/LucasMeirellesS/LUCAS_MEIRELLES_DDF_SUPORTE_2024_07/blob/main/maiscomum.png)
 
 
+## Top 10 dos usuários que mais compraram
+> SELECT
+    USER,
+    SUM(PURCHASES) AS PURCHASES_USER
+FROM
+    TB__MZ7DJ7__USER
+GROUP BY
+    USER
+ORDER BY
+    PURCHASES_USER DESC,
+    SUM(CREDIT_SCORE) DESC
+LIMIT 10;
+
+![URL-da-imagem](https://github.com/LucasMeirellesS/LUCAS_MEIRELLES_DDF_SUPORTE_2024_07/blob/main/tabelaCLientes.png)
+
+# Dashboard completo
+
+![URL-da-imagem](https://github.com/LucasMeirellesS/LUCAS_MEIRELLES_DDF_SUPORTE_2024_07/blob/main/DashboardCompleto.png)
