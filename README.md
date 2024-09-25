@@ -171,3 +171,34 @@ ORDER BY
 
 ![URL-da-imagem](https://github.com/LucasMeirellesS/LUCAS_MEIRELLES_DDF_SUPORTE_2024_07/blob/main/FATURAMENTO_DIARIO_PERIODO.png)
 
+
+## Total de Interações;
+>
+SELECT
+    HOUR,
+    COUNT(HOUR) HOUR_ACTIVATE,
+    SUM(LIKED) TOTAL_LIKES,
+    SUM(USED_PREMIUM_FEATURE) USED_PREMIUM_FEATURE_TOTAL
+FROM
+    TB__WN3XB4__INTERACTION
+GROUP BY
+    HOUR
+ORDER BY
+    TO_TIMESTAMP(HOUR, 'HH12:MI AM');
+
+![URL-da-imagem](https://github.com/LucasMeirellesS/LUCAS_MEIRELLES_DDF_SUPORTE_2024_07/blob/main/INTERACTION_GRAFIC.png)
+
+## Media de Churn
+> SELECT
+    CASE
+        WHEN CHURN = 1 THEN 'Churn'
+        WHEN CHURN = 0 THEN 'Não Churn'
+        ELSE NULL
+    END AS CHURN_STATUS,
+    AVG(AGE) AS AVG_AGE
+FROM
+    TB__MZ7DJ7__USER
+GROUP BY
+    CHURN;
+
+![URL-da-imagem](https://github.com/LucasMeirellesS/LUCAS_MEIRELLES_DDF_SUPORTE_2024_07/blob/main/MediaCHURN.png)
