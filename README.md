@@ -135,4 +135,39 @@ Para a implementação de uma nova plataforma de gerenciamento de diretório em 
 ## FLuxograma
 ![URL-da-imagem](https://github.com/LucasMeirellesS/LUCAS_MEIRELLES_DDF_SUPORTE_2024_07/blob/main/fluxograma.png)
 
+# Item Consultas SQL
+## Contagem de churn
+>SELECT
+    CASE
+        WHEN CHURN = 1 THEN 'Churn'
+        WHEN CHURN = 0 THEN 'Não Churn'
+        ELSE NULL
+    END AS CHURN_STATUS_IOS,
+    COUNT(CHURN) as CHURN_COUNT_IOS
+FROM
+    TB__MZ7DJ7__USER
+WHERE
+    IOS_USER = 1
+GROUP BY
+    CHURN;
+
+![URL-da-imagem](https://github.com/LucasMeirellesS/LUCAS_MEIRELLES_DDF_SUPORTE_2024_07/blob/main/CONTAGEMDECHURN.png)
+
+
+## Faturamento no Período diário;
+>
+SELECT
+    CASE
+        WHEN LENGTH(TRANS.DATE) = 21 THEN LEFT(TRANS.DATE, LENGTH(TRANS.DATE) - 9)
+        WHEN LENGTH(TRANS.DATE) = 22 THEN LEFT(TRANS.DATE, LENGTH(TRANS.DATE) - 10)
+     END AS DATE_TAX,
+    SUM(TAX.TAX) TOTAL
+FROM
+    TB__UUM1KE__TAX TAX JOIN TB__DBYNA1__TRANSACTIONS TRANS ON TAX.TRANSACTION_ID = TRANS.TRANSACTION_ID
+GROUP BY
+    DATE_TAX
+ORDER BY
+    DATE_TAX;
+
+![URL-da-imagem](https://github.com/LucasMeirellesS/LUCAS_MEIRELLES_DDF_SUPORTE_2024_07/blob/main/FATURAMENTO_DIARIO_PERIODO.png)
 
