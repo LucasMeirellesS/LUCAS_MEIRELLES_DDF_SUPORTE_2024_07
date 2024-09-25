@@ -82,3 +82,57 @@ Para a implementação de uma nova plataforma de gerenciamento de diretório em 
 > Resposta: Como um período de suporte mais próximo de acompanhamento ao cliente para a adaptação dessas novas mudanças e para auxiliá-los nos possíveis problemas ocorridos por conta das mudanças pois poderão ter de se adaptar a possíveis novas funcionalidades as quais serão integradas no sistema.
 
 
+# Implementação de Chatbot com AI na Dadosfera
+
+## Analise de necessidade:
+> Realizaria um estudo para verificar quais são as maiores necessidades do cliente verificando os principais pontos para que o chatbot agregue valor e auxilie o cliente da melhor forma possível.
+
+
+## Escolha da plataforma:
+> Escolheria a plataforma de chatbot AI como o GPT-4, por exemplo, com recursos de NLP, machine learning e integração com multiplos canais (web, mobile, ect)
+
+## Integração com a Dadosfera:
+> Utilizariamos as APIs da Dadosfera para integrar o chatbot, dando a ele acesso a todos os dados necessários. Também implementaria medidas de segurança adequadas para proteger os dados dos clientes e garantir que o chatbot atenda aos requisitos de conformidade com a privacidade de dados.
+
+## Testes:
+> Nessa etapa realizaremos testes para avaliar o desempenho da IA no nosso sistema, identificar bugs e dar feedbacks para avaliação.
+> Uma outra ideia é liberar uma versão de teste para um grupo seleto de usuários, para coletar feedbacks sobre o funcionamento do chatbot e procurar mudanças para melhorar a ferramenta.
+
+# Fluxo do Processo de Atendimento
+
+> Início da Interação: O cliente acessa o sistema de atendimento da Dadosfera via website ou aplicativo.
+
+#### Recepção Inicial (IA Chatbot):
+
+> Entrada do Cliente: O cliente faz uma pergunta ou relata um problema.
+
+> Processamento: A IA analisa a consulta e verifica se é uma questão comum ou algo que pode ser resolvido com informações documentadas.
+
+#### Resposta Automática (IA Chatbot):
+
+> Documentação Relevante: A IA consulta a documentação interna (docs.dadosfera.ai) e fornece uma resposta baseada nas informações encontradas.
+
+> Solicitação de Esclarecimento: Caso a consulta seja ambígua, a IA pede mais detalhes ao cliente.
+
+#### Transferência para Suporte Humano:
+
+> Casos Complexos: Se a IA não conseguir resolver a questão, a consulta é encaminhada para um agente humano especializado no suporte da Dadosfera.
+
+> Notificação: O cliente é informado da transferência e do possível tempo de espera.
+
+#### Interação com Suporte Humano:
+
+> Resolução: O agente de suporte analisa o problema e fornece uma solução personalizada.
+
+> Follow-up: A IA pode acompanhar a resolução para garantir que o cliente esteja satisfeito e não tenha dúvidas adicionais.
+
+#### Feedback e Melhoria Contínua:
+
+> Avaliação do Cliente: Após a resolução, o cliente é solicitado a fornecer feedback sobre a experiência.
+
+> Aprimoramento da IA: O feedback é utilizado para treinar e melhorar a performance da IA, aumentando sua eficácia para futuras interações.
+
+## FLuxograma
+![URL-da-imagem](https://github.com/LucasMeirellesS/LUCAS_MEIRELLES_DDF_SUPORTE_2024_07/blob/main/fluxograma.png)
+
+
